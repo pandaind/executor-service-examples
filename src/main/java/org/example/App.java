@@ -9,6 +9,7 @@ public class App {
         ExecutorService single = Executors.newSingleThreadExecutor();
         ExecutorService fixed = Executors.newFixedThreadPool(2);
         ExecutorService cached = Executors.newCachedThreadPool();
+        ScheduledExecutorService scheduled = Executors.newScheduledThreadPool(10);
 
         Runnable runnable = () -> {
             try {
@@ -47,5 +48,8 @@ public class App {
         cached.invokeAll(callables);
         cached.shutdown();
         cached.shutdownNow();
+
+        scheduled.schedule(runnable, 5, TimeUnit.SECONDS);
+        scheduled.shutdown();
     }
 }
